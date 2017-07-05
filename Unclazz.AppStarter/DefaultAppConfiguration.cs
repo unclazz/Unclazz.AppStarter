@@ -22,8 +22,8 @@ namespace Unclazz.AppStarter
         internal DefaultAppConfiguration(IAppStatistics stats)
         {
             LogDirectory = Environment.CurrentDirectory;
-            var asmName = Path.GetFileNameWithoutExtension(Path.GetFullPath(Assembly.GetEntryAssembly().Location));
-            LogFileName = string.Format("{0}_{1:yyyyMMddHHmmssfff}.log", asmName, stats.StartedOn);
+            LogFileName = string.Format("{0}_{1:yyyyMMddHHmmssfff}.log",
+                EntryAssemblyUtility.AssemblyFileNameWithoutExtension, stats.StartedOn);
         }
 
         public IAppConfigurer SetLogDirectory(string path)

@@ -55,9 +55,5 @@ namespace Unclazz.AppStarter
         {
             Start(new ActionAppStartable(myApp), args);
         }
-        string GetFullPathOfAssebmlyLocation()
-        {
-            return Path.GetFullPath(Assembly.GetEntryAssembly().Location);
-        }
     }
 }

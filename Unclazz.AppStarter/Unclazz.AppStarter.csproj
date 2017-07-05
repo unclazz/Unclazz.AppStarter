@@ -48,6 +48,7 @@
     <Compile Include="ActionAppStartable.cs" />
     <Compile Include="App.cs" />
     <Compile Include="AppLogLevel.cs" />
+    <Compile Include="EntryAssemblyUtility.cs" />
     <Compile Include="CheckUtility.cs" />
     <Compile Include="DefaultAppConfiguration.cs" />
     <Compile Include="DefaultAppContext.cs" />

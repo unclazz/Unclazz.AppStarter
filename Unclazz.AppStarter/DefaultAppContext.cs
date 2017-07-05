@@ -7,7 +7,6 @@ using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,8 +19,8 @@ namespace Unclazz.AppStarter
             // 構成情報、統計情報、コマンド名と引数などのプロパティを初期化
             Statistics = stats;
             Configuration = conf;
-            CommandPath = Path.GetFullPath(Assembly.GetEntryAssembly().Location);
-            CommandName = Path.GetFileName(CommandPath);
+            CommandPath = EntryAssemblyUtility.AssemblyFullPath;
+            CommandName = EntryAssemblyUtility.AssemblyFileName;
             Arguments = args.ToList().AsReadOnly();
 
             // ショートファイル名でアセンブリが起動されたケースも考慮して構成ファイルをロード
