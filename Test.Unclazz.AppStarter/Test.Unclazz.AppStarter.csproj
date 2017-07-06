@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckUtilityTest.cs" />
+    <Compile Include="DefaultAppConfigurationTest.cs" />
     <Compile Include="DefaultAppStatisticsTest.cs" />
     <Compile Include="EntryAssemblyUtilityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
