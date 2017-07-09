@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Unclazz.AppStarter</id>
+    <version>1.0.0.0</version>
+    <authors>unclazz.org</authors>
+    <licenseUrl>https://github.com/unclazz/Unclazz.AppStarter/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/unclazz/Unclazz.AppStarter</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This is a very small library that provides application launcher API.</description>
+    <copyright>Copyright 2017</copyright>
+  </metadata>
+  <files>
+    <file src="lib/net40/Unclazz.AppStarter.dll" target="lib/net40"/>
+    <file src="lib/net40/Unclazz.AppStarter.xml" target="lib/net40"/>
+    <file src="lib/net45/Unclazz.AppStarter.dll" target="lib/net45"/>
+    <file src="lib/net45/Unclazz.AppStarter.xml" target="lib/net45"/>
+    <file src="lib/net46/Unclazz.AppStarter.dll" target="lib/net46"/>
+    <file src="lib/net46/Unclazz.AppStarter.xml" target="lib/net46"/>
+  </files>
+</package>
