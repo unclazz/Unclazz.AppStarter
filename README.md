@@ -55,6 +55,17 @@ CommandPath | string | 実行中のアセンブリのパス（例：C:\path\to\Y
 Arguments | IList&lt;string> | コマンドライン引数
 AppSettings | IDictionary&lt;string, string> | アプリケーション構成ファイルのappSettingsセクションから読み取られた設定情報の辞書
 ConnectionStrings | IDictionary&lt;string, string> | アプリケーション構成ファイルのconnectionStringsセクションから読み取られた設定情報の辞書
-Statistics | IAppStatistics | アプリケーションの起動日時やそこからの経過時間、エラーの検知状況などの情報を保持するオブジェクト
 Logger | IAppLogger | 実行中のアプリケーションのために初期化されたロガー
+Statistics | IAppStatistics | アプリケーションの起動日時やそこからの経過時間、エラーの検知状況などの情報を保持するオブジェクト
+Configuration | IAppConfiguration | 後述するアプリケーション・ランチャーの設定情報を保持するオブジェクト
 
+デフォルトでは、あなたのアプリケーションが例外をスローしたり、ロガーを通じてエラーログを出力したりすると、アプリケーションの終了コードは `1` に設定されます。この値を変更する場合は次のように `IAppConfigurer` を通じてアプリケーション・ランチャーの設定を変更します：
+
+```cs
+App.Configure(c =>
+{
+	// エラーのときの終了ステータス・コードを2に変更
+	c.SetStatusOnFailure(2);
+})
+.Start(new Program().Start, args);
+```
