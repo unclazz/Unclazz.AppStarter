@@ -14,19 +14,18 @@ namespace Unclazz.AppStarter
         readonly DefaultAppConfiguration _conf;
         readonly IAppExitProxy _exitProxy;
         readonly IAppAssemblyProxy _asmProxy;
+        readonly Func<string[], IAppContext> _ctxFactory;
 
-        internal DefaultAppStarter()
+        internal DefaultAppStarter() : this(null, null, null)
         {
-            _exitProxy = ActionAppExitProxy.Default;
-            _asmProxy = FuncAppAssemblyProxy.Default;
+        }
+        internal DefaultAppStarter(IAppAssemblyProxy asmProxy, IAppExitProxy exitProxy, Func<string[], IAppContext> ctxFactory)
+        {
+            _asmProxy = asmProxy ?? FuncAppAssemblyProxy.Default;
+            _exitProxy = exitProxy ?? ActionAppExitProxy.Default;
             _stats = new DefaultAppStatistics(_asmProxy);
             _conf = new DefaultAppConfiguration(_asmProxy, _stats);
-        }
-        internal DefaultAppStarter(IAppAssemblyProxy asmProxy, IAppExitProxy exitProxy)
-        {
-            _exitProxy = exitProxy;
-            _stats = new DefaultAppStatistics(asmProxy);
-            _conf = new DefaultAppConfiguration(asmProxy, _stats);
+            _ctxFactory = ctxFactory ?? ((args) => new DefaultAppContext(_asmProxy, _stats, _conf, args ?? new string[0]));
         }
 
         public IAppStarter Configure(Action<IAppConfigurer> conf)
@@ -36,7 +35,7 @@ namespace Unclazz.AppStarter
         }
         public void Start(IAppStartable myApp, params string[] args)
         {
-            var ctx = new DefaultAppContext(_asmProxy, _stats, _conf, args ?? new string[0]);
+            var ctx = _ctxFactory(args);
             try
             {
                 myApp.Start(ctx);
@@ -48,7 +47,10 @@ namespace Unclazz.AppStarter
                 {
                     _exitProxy.Exit(ctx.Configuration.StatusOnFailure - 1);
                 }
-                _exitProxy.Exit(ctx.Configuration.StatusOnSuccess);
+                else
+                {
+                    _exitProxy.Exit(ctx.Configuration.StatusOnSuccess);
+                }
             }
             catch (Exception ex)
             {

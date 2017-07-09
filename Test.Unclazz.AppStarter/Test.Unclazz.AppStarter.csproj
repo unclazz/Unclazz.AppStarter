@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefaultAppStarterTest.cs" />
     <Compile Include="ActionAppStartableTest.cs" />
     <Compile Include="CheckUtilityTest.cs" />
     <Compile Include="DefaultAppConfigurationTest.cs" />

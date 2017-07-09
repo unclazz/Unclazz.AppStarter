@@ -25,12 +25,26 @@ namespace Test.Unclazz.AppStarter.Mock
                 called = true;
                 Assert.That(object.ReferenceEquals(c, ctx), Is.True);
             });
+            ActionAppStartable startable2 = new ActionAppStartable((c) => {
+                throw new Exception("test");
+            });
 
             // Act
             startable.Start(ctx);
 
             // Assert
             Assert.That(called, Is.True);
+
+            // Act2/Assert2
+            try
+            {
+                startable2.Start(ctx);
+                Assert.Fail();
+            }
+            catch (Exception ex)
+            {
+                Assert.That(ex.Message, Is.EqualTo("test"));
+            }
         }
     }
 }
