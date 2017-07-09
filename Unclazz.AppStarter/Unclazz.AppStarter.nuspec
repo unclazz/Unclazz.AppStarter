@@ -2,13 +2,16 @@
 <package >
   <metadata>
     <id>Unclazz.AppStarter</id>
-    <version>1.0.0.0</version>
+    <version>1.0.0.1</version>
     <authors>unclazz.org</authors>
     <licenseUrl>https://github.com/unclazz/Unclazz.AppStarter/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/unclazz/Unclazz.AppStarter</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>This is a very small library that provides application launcher API.</description>
     <copyright>Copyright 2017</copyright>
+    <dependencies>
+        <dependency id="NLog" version="4.4.11" />
+    </dependencies>
   </metadata>
   <files>
     <file src="lib/net40/Unclazz.AppStarter.dll" target="lib/net40"/>
