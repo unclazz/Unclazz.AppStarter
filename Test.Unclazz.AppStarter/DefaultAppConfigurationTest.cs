@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Test.Unclazz.AppStarter.Mock;
 using Unclazz.AppStarter;
 
 namespace Test.Unclazz.AppStarter
@@ -21,7 +22,7 @@ namespace Test.Unclazz.AppStarter
             _mockStartedOn = DateTime.Now;
             _mockAppStatistics = new MockAppStatistics(_mockStartedOn);
             _mockLogFileName = string.Format("{0}_{1:yyyyMMddHHmmssfff}.log",
-                EntryAssemblyUtility.AssemblyFileNameWithoutExtension, _mockStartedOn);
+                FuncAppAssemblyProxy.Default.FileNameWithoutExtension, _mockStartedOn);
         }
 
         [Test]
@@ -29,7 +30,7 @@ namespace Test.Unclazz.AppStarter
         {
             // Arrange
             // Act
-            var c = new DefaultAppConfiguration(_mockAppStatistics);
+            var c = new DefaultAppConfiguration(FuncAppAssemblyProxy.Default, _mockAppStatistics);
 
             // Assert
             Assert.That(c.StatusOnFailure, Is.EqualTo(1));
@@ -45,7 +46,7 @@ namespace Test.Unclazz.AppStarter
         public void SetLogDirectory_WhenArg0IsInvalidValue_ThrowsException()
         {
             // Arrange
-            var c = new DefaultAppConfiguration(_mockAppStatistics);
+            var c = new DefaultAppConfiguration(FuncAppAssemblyProxy.Default, _mockAppStatistics);
 
             // Act
             // Assert
@@ -63,7 +64,7 @@ namespace Test.Unclazz.AppStarter
         public void SetLogEncoding_WhenArg0IsInvalidValue_ThrowsException()
         {
             // Arrange
-            var c = new DefaultAppConfiguration(_mockAppStatistics);
+            var c = new DefaultAppConfiguration(FuncAppAssemblyProxy.Default, _mockAppStatistics);
 
             // Act
             // Assert
@@ -77,7 +78,7 @@ namespace Test.Unclazz.AppStarter
         public void SetLogFileName_WhenArg0IsInvalidValue_ThrowsException()
         {
             // Arrange
-            var c = new DefaultAppConfiguration(_mockAppStatistics);
+            var c = new DefaultAppConfiguration(FuncAppAssemblyProxy.Default, _mockAppStatistics);
 
             // Act
             // Assert
@@ -95,7 +96,7 @@ namespace Test.Unclazz.AppStarter
         public void SetStatusOnFailure_WhenArg0IsInvalidValue_ThrowsException()
         {
             // Arrange
-            var c = new DefaultAppConfiguration(_mockAppStatistics);
+            var c = new DefaultAppConfiguration(FuncAppAssemblyProxy.Default, _mockAppStatistics);
 
             // Act
             // Assert
@@ -114,7 +115,7 @@ namespace Test.Unclazz.AppStarter
         public void SetStatusOnSuccess_WhenArg0IsInvalidValue_ThrowsException()
         {
             // Arrange
-            var c = new DefaultAppConfiguration(_mockAppStatistics);
+            var c = new DefaultAppConfiguration(FuncAppAssemblyProxy.Default, _mockAppStatistics);
 
             // Act
             // Assert
@@ -129,22 +130,5 @@ namespace Test.Unclazz.AppStarter
                 c.SetStatusOnSuccess(-2);
             }, Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
-    }
-
-    class MockAppStatistics : IAppStatistics
-    {
-        internal MockAppStatistics(DateTime startedOn)
-        {
-            StartedOn = startedOn;
-        }
-        public bool ShortNameUsed => false;
-
-        public bool ErrorDetected => false;
-
-        public bool WarningDetected => false;
-
-        public DateTime StartedOn { get; }
-
-        public TimeSpan ElapsedTime => DateTime.Now - StartedOn;
     }
 }

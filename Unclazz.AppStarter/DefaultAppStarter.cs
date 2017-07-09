@@ -12,11 +12,21 @@ namespace Unclazz.AppStarter
     {
         readonly DefaultAppStatistics _stats;
         readonly DefaultAppConfiguration _conf;
+        readonly IAppExitProxy _exitProxy;
+        readonly IAppAssemblyProxy _asmProxy;
 
         internal DefaultAppStarter()
         {
-            _stats = new DefaultAppStatistics();
-            _conf = new DefaultAppConfiguration(_stats);
+            _exitProxy = ActionAppExitProxy.Default;
+            _asmProxy = FuncAppAssemblyProxy.Default;
+            _stats = new DefaultAppStatistics(_asmProxy);
+            _conf = new DefaultAppConfiguration(_asmProxy, _stats);
+        }
+        internal DefaultAppStarter(IAppAssemblyProxy asmProxy, IAppExitProxy exitProxy)
+        {
+            _exitProxy = exitProxy;
+            _stats = new DefaultAppStatistics(asmProxy);
+            _conf = new DefaultAppConfiguration(asmProxy, _stats);
         }
 
         public IAppStarter Configure(Action<IAppConfigurer> conf)
@@ -26,25 +36,24 @@ namespace Unclazz.AppStarter
         }
         public void Start(IAppStartable myApp, params string[] args)
         {
-            var ctx = new DefaultAppContext(_stats, _conf, args ?? new string[0]);
+            var ctx = new DefaultAppContext(_asmProxy, _stats, _conf, args ?? new string[0]);
             try
             {
                 myApp.Start(ctx);
                 if (ctx.Statistics.ErrorDetected)
                 {
-                    Environment.Exit(ctx.Configuration.StatusOnFailure);
+                    _exitProxy.Exit(ctx.Configuration.StatusOnFailure);
                 }
                 else if (ctx.Statistics.WarningDetected)
                 {
-                    Environment.Exit(ctx.Configuration.StatusOnFailure - 1);
+                    _exitProxy.Exit(ctx.Configuration.StatusOnFailure - 1);
                 }
-                Environment.Exit(ctx.Configuration.StatusOnSuccess);
+                _exitProxy.Exit(ctx.Configuration.StatusOnSuccess);
             }
             catch (Exception ex)
             {
-                Environment.Exit(ctx.Configuration.StatusOnFailure);
                 ctx.Logger.Error(ex, "An error has occurred. And the application has stopped working.");
-                throw;
+                _exitProxy.Exit(ctx.Configuration.StatusOnFailure);
             }
         }
         public void Start<T>(params string[] args) where T : IAppStartable, new()

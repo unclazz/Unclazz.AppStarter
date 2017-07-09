@@ -14,13 +14,14 @@ namespace Unclazz.AppStarter
 {
     sealed class DefaultAppContext : IAppContext
     {
-        internal DefaultAppContext(DefaultAppStatistics stats, IAppConfiguration conf, string[] args)
+        internal DefaultAppContext(IAppAssemblyProxy asmProxy, 
+            DefaultAppStatistics stats, IAppConfiguration conf, string[] args)
         {
             // 構成情報、統計情報、コマンド名と引数などのプロパティを初期化
             Statistics = stats;
             Configuration = conf;
-            CommandPath = EntryAssemblyUtility.AssemblyFullPath;
-            CommandName = EntryAssemblyUtility.AssemblyFileName;
+            CommandPath = asmProxy.FullPath;
+            CommandName = asmProxy.FileName;
             Arguments = args.ToList().AsReadOnly();
 
             // ショートファイル名でアセンブリが起動されたケースも考慮して構成ファイルをロード

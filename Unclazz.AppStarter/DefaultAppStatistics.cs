@@ -10,10 +10,10 @@ namespace Unclazz.AppStarter
 {
     sealed class DefaultAppStatistics : IAppStatistics
     {
-        internal DefaultAppStatistics()
+        internal DefaultAppStatistics(IAppAssemblyProxy asmProxy)
         {
             StartedOn = DateTime.Now;
-            ShortNameUsed = EntryAssemblyUtility.SpecifiedByShortFileName;
+            ShortNameUsed = asmProxy.SpecifiedByShortFileName;
         }
         public bool ShortNameUsed { get; internal set; }
         public bool ErrorDetected { get; internal set; }

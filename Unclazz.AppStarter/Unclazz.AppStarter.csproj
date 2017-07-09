@@ -45,10 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FuncAppAssemblyProxy.cs" />
+    <Compile Include="ActionAppExitProxy.cs" />
     <Compile Include="ActionAppStartable.cs" />
     <Compile Include="App.cs" />
     <Compile Include="AppLogLevel.cs" />
-    <Compile Include="EntryAssemblyUtility.cs" />
     <Compile Include="CheckUtility.cs" />
     <Compile Include="DefaultAppConfiguration.cs" />
     <Compile Include="DefaultAppContext.cs" />
@@ -58,10 +59,12 @@
     <Compile Include="IAppConfiguration.cs" />
     <Compile Include="IAppConfigurer.cs" />
     <Compile Include="IAppContext.cs" />
+    <Compile Include="IAppExitProxy.cs" />
     <Compile Include="IAppLogger.cs" />
     <Compile Include="IAppStartable.cs" />
     <Compile Include="IAppStarter.cs" />
     <Compile Include="IAppStatistics.cs" />
+    <Compile Include="IAppAssemblyProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

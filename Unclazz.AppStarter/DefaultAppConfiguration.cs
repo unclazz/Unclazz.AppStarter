@@ -19,11 +19,11 @@ namespace Unclazz.AppStarter
         public string LogFileName { get; private set; }
         public Encoding LogEncoding { get; private set; } = Encoding.UTF8;
 
-        internal DefaultAppConfiguration(IAppStatistics stats)
+        internal DefaultAppConfiguration(IAppAssemblyProxy asmProxy, IAppStatistics stats)
         {
             LogDirectory = Environment.CurrentDirectory;
             LogFileName = string.Format("{0}_{1:yyyyMMddHHmmssfff}.log",
-                EntryAssemblyUtility.AssemblyFileNameWithoutExtension, stats.StartedOn);
+                asmProxy.FileNameWithoutExtension, stats.StartedOn);
         }
 
         public IAppConfigurer SetLogDirectory(string path)

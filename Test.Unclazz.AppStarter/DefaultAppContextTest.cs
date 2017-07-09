@@ -19,19 +19,20 @@ namespace Test.Unclazz.AppStarter
         [SetUp]
         public void SetUp()
         {
-            _mockAppStatistics = new DefaultAppStatistics(); ;
-            _mockAppConfiguration = new DefaultAppConfiguration(_mockAppStatistics);
+            _mockAppStatistics = new DefaultAppStatistics(FuncAppAssemblyProxy.Default); ;
+            _mockAppConfiguration = new DefaultAppConfiguration(FuncAppAssemblyProxy.Default, _mockAppStatistics);
         }
 
         [Test]
         public void Constructor_InitializesEachPropertiesAndLogManagerConfiguration()
         {
             var args = new string[] { "foo", "bar", "baz" };
-            var ctx = new DefaultAppContext(_mockAppStatistics, _mockAppConfiguration, args);
+            var ctx = new DefaultAppContext(FuncAppAssemblyProxy.Default, 
+                _mockAppStatistics, _mockAppConfiguration, args);
 
             Assert.That(ctx.Arguments.ToArray(), Is.EqualTo(args));
-            Assert.That(ctx.CommandName, Is.EqualTo(EntryAssemblyUtility.AssemblyFileName));
-            Assert.That(ctx.CommandPath, Is.EqualTo(EntryAssemblyUtility.AssemblyFullPath));
+            Assert.That(ctx.CommandName, Is.EqualTo(FuncAppAssemblyProxy.Default.FileName));
+            Assert.That(ctx.CommandPath, Is.EqualTo(FuncAppAssemblyProxy.Default.FullPath));
 
             var targets = LogManager.Configuration.AllTargets;
             var rules = LogManager.Configuration.LoggingRules;

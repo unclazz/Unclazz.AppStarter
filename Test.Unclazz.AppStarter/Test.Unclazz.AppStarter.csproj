@@ -46,11 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionAppStartableTest.cs" />
     <Compile Include="CheckUtilityTest.cs" />
     <Compile Include="DefaultAppConfigurationTest.cs" />
     <Compile Include="DefaultAppContextTest.cs" />
     <Compile Include="DefaultAppStatisticsTest.cs" />
-    <Compile Include="EntryAssemblyUtilityTest.cs" />
+    <Compile Include="FuncAppAssemblyProxyTest.cs" />
+    <Compile Include="Mock\MockAppStatistics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

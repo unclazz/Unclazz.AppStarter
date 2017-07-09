@@ -16,12 +16,11 @@ namespace Test.Unclazz.AppStarter
         public bool ShortNameUsed_CheckIfShortFileNameIsUsed(string arg0, string arg1)
         {
             // Arrange
-            EntryAssemblyUtility.AssemblyLocation = arg0;
-            EntryAssemblyUtility.AssemblyFullPath = arg1;
+            var asmProxy = new FuncAppAssemblyProxy(() => arg0, s => arg1);
 
             // Act
             // Assert
-            return new DefaultAppStatistics().ShortNameUsed;
+            return new DefaultAppStatistics(asmProxy).ShortNameUsed;
         }
     }
 }
